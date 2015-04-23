@@ -7,25 +7,33 @@
   </div>
 
   <!-- ADD NEW GAME -->
-  <div class="btn" ng-click="submitGame()"> Add a New Game </div>
-  <form ng-show="toggleNewGameForm" class="form">
-    <span class="large">Opponent:</span> <br /><select ng-model="teams" ng-options="team for team in teams" class="form-control" required name="team"></select> <br /><br />
-    <span class="large">Score:</span> <br /> {{teamData.homeTeam}}: <input class="inputs" type="text" ng-model="teamData.homeTeamScore" placeholder="Home Score"> {{teamData.opponent}}: <input type="text" class="inputs" ng-model="teamData.opponentScore" placeholder="Opponent Score"> <br /><br />
+  <div class="btn" ng-click="toggleNewGameForm()"> Add a New Game </div>
+  <form ng-show="showNewGameForm" class="form">
+    <span class="large">Opponent:</span> 
+      <br />
+    <select ng-model="newGame.opponent" ng-options="team for team in teams" class="form-control" required name="team"></select> 
+      <br /><br />
+    <span class="large">Score:</span> 
+      <br /> 
+    <input class="inputs" type="text" ng-model="newGame.homeTeamScore" placeholder="Home Score"> 
+    <input type="text" class="inputs" ng-model="newGame.opponentScore" placeholder="Opponent Score"> 
+      <br /><br />
     <button ng-click="submitGame()"> Submit </button>
   </form>
 
   <!-- TEAM DATA -->
   <div class="team-data">
     <div class="game" ng-repeat="game in teamData" ng-class="{'even' : $index % 2 === 0}">
-      Date: {{teamData.createdAt}} <br />
+      Date: {{game.createdAt | date: 'short'}} <br />
+
       <!-- 
         The below question marks should render like this
         Utah Jazz (Or name of Team) - Score of the particular Game
         Opponent Name - Opponent Score for that Game
       -->
 
-        {{homeTeam}} - {{teamDataHomeScore}}<br />
-      {{teamDataOpponent}} - {{teamDataOppScore}} </br />
+        {{homeTeam}} - {{game.homeTeamScore}}<br />
+      {{game.opponent}} - {{game.opponentScore}} </br />
     </div>
   </div>
 </div>

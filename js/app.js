@@ -7,12 +7,17 @@ app.config(function($routeProvider, $httpProvider){
   $routeProvider
   .when('/', {
   	templateUrl: "js/home/homeTmpl.html",
-  	controller: "homeCtrl"
+  	controller: "homeCtrl",
+    resolve: {
+      teamData: function($route, homeService){
+        return homeService.getTeamData($route.current.params.team);
+      }
+    }
   })
   .when('/teams/:team', {
   	templateUrl: "js/teams/teamTmpl.html",
   	controller: "teamCtrl",
-  	resolve: {
+  	resolve: { // Resolve always runs before the page loads!
   		teamData: function($route, teamService){
   			return teamService.getTeamData($route.current.params.team);
   		}

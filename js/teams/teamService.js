@@ -5,12 +5,12 @@ app.service('teamService', function($http, $q){
 		var url = "https://api.parse.com/1/classes/" + gameObj.homeTeam;
 		var homeScoreInt = parseInt(gameObj.homeTeamScore);
 		var opponentScoreInt = parseInt(gameObj.opponentScore);
-		if (homeScoreInt > opponentScoreInt) {
-			gameObj.won = true;
-		}
-		else {
-			gameObj.won = false;
-		}
+			if (homeScoreInt > opponentScoreInt) {
+				gameObj.won = true;
+			}
+			else {
+				gameObj.won = false;
+			}
 		return $http({
 			method: "POST",
 			url: url,

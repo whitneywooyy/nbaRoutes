@@ -4,7 +4,12 @@ app.controller('teamCtrl', function($scope, $routeParams, teamService, teamData)
 	$scope.teamData = teamData;
 	$scope.newGame = {};
 	$scope.showNewGameForm = false;
-	$scope.toggleNewGameForm = !$scope.showNewGameForm;
+
+	// console.log("Team data", $scope.teamData);
+
+	$scope.toggleNewGameForm = function(){
+		$scope.showNewGameForm = !$scope.showNewGameForm;
+	};
 
 	if ($routeParams.team === "utahjazz") {
 		$scope.homeTeam = "Utah Jazz";
@@ -22,20 +27,17 @@ app.controller('teamCtrl', function($scope, $routeParams, teamService, teamData)
 	$scope.submitGame = function(){
 		$scope.newGame.homeTeam = $scope.homeTeam.split(' ').join('').toLowerCase();
 		teamService.addNewGame($scope.newGame).then(function(){
-			teamService.getTeamData($scope.newGame.homeTeam).then(function(something){
+			teamService.getTeamData($scope.newGame.homeTeam).then(function(response){	// What is response doing?
+					$scope.teamData = response;	// Set $scope.teamData equal to the data you got back from the promise. // WHICH promise?
+				console.log("New game object", $scope.newGame);
 
+					$scope.newGame = {};
+					$scope.showNewGameForm = false;
 			});
 		});
-		$scope.teamData = teamData;
-		$scope.newGame = {};
-		$scope.showNewGameForm = false;
+		
 	};
-
-	for (var i = 0; i < $scope.teamData.length; i++) {
-		$scope.teamDataOpponent = $scope.teamData[i].opponent;
-		$scope.teamDataHomeScore = $scope.teamData[i].homeTeamScore;
-		$scope.teamDataOppScore = $scope.teamData[i].opponentScore;
-	}
+	// console.log("New game:", $scope.newGame);
 
 	// console.log($scope.teamData);
 
